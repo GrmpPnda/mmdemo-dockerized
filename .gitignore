@@ -2,6 +2,8 @@
 #############################
 .env
 /mongo_data_dir
+/solr-cores/WebPages
+/solr-cores/*/data
 
 # OS generated files #
 ######################
