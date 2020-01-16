@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:bionic
 
 MAINTAINER Manos Schinas <manosetro@iti.gr>
 
@@ -7,7 +7,8 @@ RUN apt-get -y upgrade
 
 # Install apache, PHP, and supplimentary programs. curl and lynx-cur are for debugging the container.
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 php7.0-dev libapache2-mod-php7.0 php7.0-mcrypt php7.0-gd libxml2  \
-php-pear php-apcu php7.0-curl curl lynx-cur memcached php-memcached libcurl4-openssl-dev pkg-config libssl-dev apt-utils python python-dev python-pip php-zip
+php-pear php-apcu php7.0-curl curl lynx-cur memcached php-memcached libcurl4-openssl-dev pkg-config libssl-dev apt-utils python python-dev python-pip php-zip \
+php-mbstring
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

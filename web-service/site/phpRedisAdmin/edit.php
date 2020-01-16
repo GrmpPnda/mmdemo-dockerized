@@ -58,10 +58,12 @@ if (isset($_POST['type'], $_POST['key'], $_POST['value'])) {
     $size = $redis->lLen($key);
 
     if (($_POST['index'] == '') ||
-        ($_POST['index'] == $size) ||
-        ($_POST['index'] == -1)) {
+        ($_POST['index'] == $size)) {
       // Push it at the end
       $redis->rPush($key, $value);
+    } else if ($_POST['index'] == -1) {
+      // Push it at the start
+      $redis->lPush($key, $value);
     } else if (($_POST['index'] >= 0) &&
                ($_POST['index'] < $size)) {
       // Overwrite an index
@@ -142,7 +144,7 @@ require 'includes/header.inc.php';
 
 ?>
 <h2><?php echo $edit ? 'Edit' : 'Add'?></h2>
-<form action="<?php echo format_html($_SERVER['REQUEST_URI'])?>" method="post">
+<form action="<?php echo format_html(getRelativePath('edit.php'))?>" method="post">
 
 <p>
 <label for="type">Type:</label>

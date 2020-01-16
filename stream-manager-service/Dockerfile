@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8
 MAINTAINER Manos Schinas manosetro@iti.gr
 
 RUN apt-get update && \

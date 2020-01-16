@@ -40,11 +40,16 @@ services:
           - redis
 
   mongodb:
-    image: mongo:3.2.11
+    image: mongo:3
     command: mongod --auth
     volumes:
       - ./mongo_data_dir:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=admin
+      - MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD
     networks:
       common_network:
         aliases:
@@ -74,8 +79,8 @@ services:
       - "80:80"
     restart: always
     environment:
-      MONGO_USER: admin
-      MONGO_PASSWORD: place_your_password_here
+      - MONGO_USER
+      - MONGO_PASSWORD
     networks:
       common_network:
         aliases:
@@ -93,8 +98,8 @@ services:
       - ./stream-manager-service/conf:/stream_manager/conf
     restart: always
     environment:
-      MONGO_USER: admin
-      MONGO_PASSWORD: place_your_password_here
+      - MONGO_USER
+      - MONGO_PASSWORD
     networks:
       common_network:
         aliases:

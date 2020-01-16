@@ -14,14 +14,16 @@ if (!empty($admin_user)) {
 }
 
 $i=1;
+$config['servers'] = array();
 
-while (TRUE) {
+while (true) {
 
   $prefix = 'REDIS_' . $i . '_';
 
   $server_name = getenv($prefix . 'NAME');
   $server_host = getenv($prefix . 'HOST');
   $server_port = getenv($prefix . 'PORT');
+  $server_auth = getenv($prefix . 'AUTH');
 
   if (empty($server_host)) {
     break;
@@ -30,6 +32,10 @@ while (TRUE) {
   if (empty($server_name)) {
     $server_name = $server_host;
   }
+  
+  if (empty($server_auth)) {
+    $server_auth = "";
+  } 
 
   if (empty($server_port)) {
     $server_port = 6379;
@@ -41,6 +47,10 @@ while (TRUE) {
       'port'   => $server_port,
       'filter' => '*',
   );
+  
+  if (!empty($server_auth)) {
+    $config['servers'][$i-1]['auth'] = $server_auth;
+  } 
 
   $i++;
 }
